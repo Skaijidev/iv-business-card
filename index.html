@@ -131,11 +131,11 @@
 
         @keyframes scroll-center {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); } /* ✅ Полный цикл */
+            100% { transform: translateX(-100%); }
         }
         @keyframes scroll-bottom {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); } /* ✅ Полный цикл */
+            100% { transform: translateX(-100%); }
         }
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.5); }
@@ -156,17 +156,28 @@
         <div class="qr-code" onclick="window.open('https://t.me/ivdevv', '_blank')"></div>
         
         <div class="scrolling-text-center">
-            <span>IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>
+                IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;
+                IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;
+                IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;
+                IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
         </div>
         <div class="scrolling-text-bottom">
-            <span>INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>
+                INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;
+                INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;
+                INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;
+                INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
         </div>
     </div>
 
-    <!-- Three.js + GLTFLoader -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/examples/js/loaders/GLTFLoader.js"></script>
-    <script>
+    <!-- ВЕСЬ JS КАК ES-МОДУЛЬ -->
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/loaders/GLTFLoader.js';
+
         const canvas = document.getElementById("hero-canvas");
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x8a2be2);
@@ -183,7 +194,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Освещение
+        // свет
         const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
         dirLight.position.set(4, 4, 5);
         scene.add(dirLight);
@@ -191,9 +202,9 @@
         const ambient = new THREE.AmbientLight(0x3a3a6a, 0.3);
         scene.add(ambient);
 
-        // Загрузка публичной модели — анимированный персонаж
+        // загрузка модели
         let model = null;
-        const loader = new THREE.GLTFLoader();
+        const loader = new GLTFLoader();
         loader.load(
             'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/RiggedFigure/glTF-Binary/RiggedFigure.glb',
             (gltf) => {
@@ -205,9 +216,12 @@
             undefined,
             (error) => {
                 console.error('Ошибка загрузки модели:', error);
-                // Запасной объект
                 const geo = new THREE.IcosahedronGeometry(2, 4);
-                const mat = new THREE.MeshStandardMaterial({ color: 0xff3366, metalness: 0.8, roughness: 0.2 });
+                const mat = new THREE.MeshStandardMaterial({
+                    color: 0xff3366,
+                    metalness: 0.8,
+                    roughness: 0.2
+                });
                 scene.add(new THREE.Mesh(geo, mat));
             }
         );
