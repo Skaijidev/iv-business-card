@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IV - UNITY DEVELOPER</title>
-    <!-- Подключаем Bebas Neue с Google Fonts (с кириллицей) -->
+    <!-- Убраны пробелы в конце URL -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         * {
@@ -16,7 +16,7 @@
             width: 100vw;
             height: 100vh;
             background: linear-gradient(135deg, #8a2be2, #9400d3);
-            font-family: 'Bebas Neue', sans-serif; /* ✅ Новый шрифт */
+            font-family: 'Bebas Neue', sans-serif;
             color: white;
             overflow: hidden;
             position: relative;
@@ -44,13 +44,13 @@
             pointer-events: none;
         }
         .text h1 {
-            font-size: 7rem; /* увеличил для жирности */
+            font-size: 7rem;
             letter-spacing: -2px;
             line-height: 1;
             text-shadow: 0 0 10px #fff, 0 0 20px #fff;
         }
         .text p {
-            font-size: 1.8rem; /* тоже крупнее */
+            font-size: 1.8rem;
             opacity: 0.9;
             max-width: 500px;
             margin-top: 1.2rem;
@@ -89,33 +89,29 @@
             animation: pulse 2s infinite ease-in-out;
         }
 
-        /* Центральная строка */
+        /* Центральная строка — ЗА объектом, БЕЗ фона, ОГРОМНЫЙ шрифт */
         .scrolling-text-center {
             position: absolute;
             top: 50%;
             left: 0;
             width: 100%;
-            height: 80px;
+            height: auto;
             margin-top: -40px;
-            background: rgba(0,0,0,0.2);
             color: white;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.2rem;
+            font-size: 5.5rem; /* ✅ Очень крупный */
             white-space: nowrap;
             overflow: hidden;
-            z-index: 5;
+            z-index: 0; /* ✅ Под canvas (z-index: 1) */
             pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
         }
         .scrolling-text-center span {
             display: inline-block;
-            padding-left: 100vw;
-            animation: scroll 20s linear infinite;
+            animation: scroll-center 25s linear infinite;
         }
 
-        /* Нижняя строка */
+        /* Нижняя строка — компактная, без пауз */
         .scrolling-text-bottom {
             position: absolute;
             bottom: 0;
@@ -133,13 +129,16 @@
         }
         .scrolling-text-bottom span {
             display: inline-block;
-            padding-left: 100vw;
-            animation: scroll 25s linear infinite;
+            animation: scroll-bottom 20s linear infinite;
         }
 
-        @keyframes scroll {
+        @keyframes scroll-center {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            100% { transform: translateX(-50%); } /* ✅ Потому что текст удвоен */
+        }
+        @keyframes scroll-bottom {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.5); }
@@ -159,14 +158,18 @@
         <div class="cta" onclick="window.open('https://t.me/ivdevv', '_blank')">TELEGRAM></div>
         <div class="qr-code" onclick="window.open('https://t.me/ivdevv', '_blank')"></div>
         
+        <!-- Центральная строка — ДВА раза текст подряд -->
         <div class="scrolling-text-center">
-            <span>IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
+        
+        <!-- Нижняя строка — тоже два раза -->
         <div class="scrolling-text-bottom">
-            <span>INN: 10024829459 | OGRNIP: 222999101 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
     </div>
 
+    <!-- Убраны пробелы в CDN -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
     <script>
         const canvas = document.getElementById("hero-canvas");
