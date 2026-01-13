@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IV - UNITY DEVELOPER</title>
-    <!-- Убраны пробелы в конце URL -->
+    <!-- Без пробелов в конце -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         * {
@@ -89,7 +89,7 @@
             animation: pulse 2s infinite ease-in-out;
         }
 
-        /* Центральная строка — ЗА объектом, БЕЗ фона, ОГРОМНЫЙ шрифт */
+        /* Центральная строка — за объектом, без фона */
         .scrolling-text-center {
             position: absolute;
             top: 50%;
@@ -99,10 +99,10 @@
             margin-top: -40px;
             color: white;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 5.5rem; /* ✅ Очень крупный */
+            font-size: 5.5rem;
             white-space: nowrap;
             overflow: hidden;
-            z-index: 0; /* ✅ Под canvas (z-index: 1) */
+            z-index: 0;
             pointer-events: none;
             text-align: center;
         }
@@ -111,7 +111,7 @@
             animation: scroll-center 25s linear infinite;
         }
 
-        /* Нижняя строка — компактная, без пауз */
+        /* Нижняя строка — зациклена без пробелов */
         .scrolling-text-bottom {
             position: absolute;
             bottom: 0;
@@ -134,7 +134,7 @@
 
         @keyframes scroll-center {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* ✅ Потому что текст удвоен */
+            100% { transform: translateX(-50%); }
         }
         @keyframes scroll-bottom {
             0% { transform: translateX(0); }
@@ -158,18 +158,16 @@
         <div class="cta" onclick="window.open('https://t.me/ivdevv', '_blank')">TELEGRAM></div>
         <div class="qr-code" onclick="window.open('https://t.me/ivdevv', '_blank')"></div>
         
-        <!-- Центральная строка — ДВА раза текст подряд -->
         <div class="scrolling-text-center">
             <span>IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
         
-        <!-- Нижняя строка — тоже два раза -->
         <div class="scrolling-text-bottom">
             <span>INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
     </div>
 
-    <!-- Убраны пробелы в CDN -->
+    <!-- Без пробелов -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
     <script>
         const canvas = document.getElementById("hero-canvas");
