@@ -49,7 +49,7 @@
         <p>Интерактивный объект, реагирующий на курсор.</p>
     </div>
 
-    <!-- Three.js без пробелов и с актуальной версией -->
+    <!-- Three.js — без пробелов в URL! -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
     <script>
         // Инициализация
@@ -74,31 +74,37 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Создаём 3D объект
+        // Создаём 3D объект — теперь с объёмным освещением
         const geometry = new THREE.IcosahedronGeometry(2, 4);
         const material = new THREE.MeshPhongMaterial({
             color: 0x6c5ce7,
-            emissive: 0x6c5ce7,
             shininess: 100
+            // emissive убран — чтобы грани реагировали на свет!
         });
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        // Освещение
-        const light = new THREE.PointLight(0xffffff, 1, 100);
-        light.position.set(5, 5, 5);
-        scene.add(light);
+        // Основной свет (спереди-сверху)
+        const mainLight = new THREE.PointLight(0xffffff, 1, 100);
+        mainLight.position.set(5, 5, 5);
+        scene.add(mainLight);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        // Мягкий фоновый свет
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
         scene.add(ambientLight);
+
+        // Контровой свет (сзади) — для отделения от фона
+        const rimLight = new THREE.PointLight(0x4a4a8a, 0.5, 50);
+        rimLight.position.set(-5, -5, -5);
+        scene.add(rimLight);
 
         // Переменные для курсора
         let mouseX = 0;
         let mouseY = 0;
 
         window.addEventListener("mousemove", (event) => {
-            mouseX = (event.clientX / window.innerWidth) * 2 - 1;          // X: от -1 (слева) до +1 (справа)
-            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;       // Y: от +1 (сверху) до -1 (снизу)
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;          // X: -1 → +1
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;       // Y: +1 (вверху) → -1 (внизу)
         });
 
         // Адаптивность
@@ -108,7 +114,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Плавная анимация с интерполяцией
+        // Плавная анимация
         let targetRotationX = 0;
         let targetRotationY = 0;
         const rotationSpeed = 0.05;
@@ -116,11 +122,9 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            // Целевые углы поворота на основе позиции мыши
             targetRotationX = mouseY * 1.5;
             targetRotationY = mouseX * 1.5;
 
-            // Плавный переход к цели
             mesh.rotation.x += (targetRotationX - mesh.rotation.x) * rotationSpeed;
             mesh.rotation.y += (targetRotationY - mesh.rotation.y) * rotationSpeed;
 
