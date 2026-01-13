@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IV - UNITY DEVELOPER</title>
-    <!-- Без пробелов в конце -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         * {
@@ -89,7 +88,6 @@
             animation: pulse 2s infinite ease-in-out;
         }
 
-        /* Центральная строка — за объектом, без фона */
         .scrolling-text-center {
             position: absolute;
             top: 50%;
@@ -111,7 +109,6 @@
             animation: scroll-center 25s linear infinite;
         }
 
-        /* Нижняя строка — зациклена без пробелов */
         .scrolling-text-bottom {
             position: absolute;
             bottom: 0;
@@ -161,14 +158,14 @@
         <div class="scrolling-text-center">
             <span>IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;IP VOITOV ILYA ANDREEVICH — PROJECT DEVELOPMENT ON UNITY&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
-        
         <div class="scrolling-text-bottom">
             <span>INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;INN: 10024829459 | OGRNIP: 222999101&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </div>
     </div>
 
-    <!-- Без пробелов -->
+    <!-- Three.js + GLTFLoader -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/examples/js/loaders/GLTFLoader.js"></script>
     <script>
         const canvas = document.getElementById("hero-canvas");
         const scene = new THREE.Scene();
@@ -186,21 +183,35 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        const geometry = new THREE.IcosahedronGeometry(2, 4);
-        const material = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            metalness: 0.8,
-            roughness: 0.1
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
+        // Освещение
         const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
         dirLight.position.set(4, 4, 5);
         scene.add(dirLight);
 
         const ambient = new THREE.AmbientLight(0x3a3a6a, 0.3);
         scene.add(ambient);
+
+        // Загрузка модели — имя файла как в репозитории
+        let model = null;
+        const loader = new THREE.GLTFLoader();
+        loader.load(
+            'kuma_heavy_robot_r-9000s.glb',
+            (gltf) => {
+                model = gltf.scene;
+                // Подбираем масштаб и позицию под твою модель
+                model.scale.set(0.8, 0.8, 0.8);
+                model.position.y = -1.2;
+                scene.add(model);
+            },
+            undefined,
+            (error) => {
+                console.error('Не удалось загрузить модель:', error);
+                // Резервный объект на случай ошибки
+                const geo = new THREE.IcosahedronGeometry(2, 4);
+                const mat = new THREE.MeshStandardMaterial({ color: 0xff3366, metalness: 0.8, roughness: 0.2 });
+                scene.add(new THREE.Mesh(geo, mat));
+            }
+        );
 
         let mouseX = 0, mouseY = 0;
         window.addEventListener("mousemove", (e) => {
@@ -220,14 +231,12 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            targetX = mouseY * 1.8;
-            targetY = mouseX * 1.8;
-
-            mesh.rotation.x += (targetX - mesh.rotation.x) * speed;
-            mesh.rotation.y += (targetY - mesh.rotation.y) * speed;
-
-            const scale = 1 + Math.abs(mouseX) * 0.1;
-            mesh.scale.set(scale, scale, scale);
+            if (model) {
+                targetX = mouseY * 1.2;
+                targetY = mouseX * 1.2;
+                model.rotation.x += (targetX - model.rotation.x) * speed;
+                model.rotation.y += (targetY - model.rotation.y) * speed;
+            }
 
             renderer.render(scene, camera);
         }
