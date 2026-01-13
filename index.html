@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IV</title>
+    <title>ИП Войтов Илья Андреевич</title>
     <style>
         * {
             margin: 0;
@@ -78,23 +78,40 @@
             width: 180px;
             height: 180px;
             background: url('photo_2026-01-13_13-23-04.jpg') no-repeat center;
-            background-size: contain;
+            background-size: contain; /* ✅ Не обрезает */
+            padding: 10px;
+            background-color: rgba(255,255,255,0.95); /* ✅ Белый фон с прозрачностью */
             border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 0 20px rgba(255,255,255,0.5);
             pointer-events: auto;
             z-index: 20;
             animation: pulse 2s infinite ease-in-out;
         }
-        .pixel-cross {
+        .scrolling-text {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M10 2L12 4H18V10L20 12V18H18V24H12L10 22L8 24H2V18H0V12L2 10V4H8L10 2Z" fill="white"/></svg>') no-repeat center;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 5; /* За 3D-объектом, но перед фоном */
             pointer-events: none;
-            opacity: 0.7;
         }
-
+        .scrolling-text span {
+            display: inline-block;
+            padding-left: 100vw;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.5); }
             50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,255,255,0.8); }
@@ -107,23 +124,15 @@
 
     <div class="container">
         <div class="text">
-            <h1>IV</h1>
+            <h1>ИП ВОЙТОВ ИЛЬЯ АНДРЕЕВИЧ</h1>
             <p>Разработка проектов на Unity</p>
         </div>
-        <div class="cta" onclick="window.open('https://t.me/ivdevv', '_blank')">Telegram ></div>
+        <div class="cta" onclick="window.open('https://t.me/ivdevv', '_blank')">Telegram</div>
         <div class="qr-code" onclick="window.open('https://t.me/ivdevv', '_blank')"></div>
+        <div class="scrolling-text">
+            <span>ИП ВОЙТОВ ИЛЬЯ АНДРЕЕВИЧ — РАЗРАБОТКА ПРОЕКТОВ НА UNITY &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
     </div>
-
-    <!-- Пиксельные крестики -->
-    <script>
-        for (let i = 0; i < 8; i++) {
-            const cross = document.createElement('div');
-            cross.classList.add('pixel-cross');
-            cross.style.left = `${Math.random() * 100}%`;
-            cross.style.top = `${Math.random() * 100}%`;
-            document.body.appendChild(cross);
-        }
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
     <script>
