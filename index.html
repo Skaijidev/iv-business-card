@@ -49,7 +49,7 @@
         <p>Интерактивный объект, реагирующий на курсор.</p>
     </div>
 
-    <!-- Three.js — без пробелов в URL! -->
+    <!-- Three.js — без пробелов! -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
     <script>
         // Инициализация
@@ -74,37 +74,35 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Создаём 3D объект — теперь с объёмным освещением
+        // Геометрия и материал — с лёгким emissive для контраста
         const geometry = new THREE.IcosahedronGeometry(2, 4);
         const material = new THREE.MeshPhongMaterial({
             color: 0x6c5ce7,
+            emissive: 0x1a1435, // очень тёмный, но даёт объём
             shininess: 100
-            // emissive убран — чтобы грани реагировали на свет!
         });
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        // Основной свет (спереди-сверху)
-        const mainLight = new THREE.PointLight(0xffffff, 1, 100);
-        mainLight.position.set(5, 5, 5);
+        // Основной свет (ближе к камере)
+        const mainLight = new THREE.PointLight(0xffffff, 1.2, 80);
+        mainLight.position.set(3, 3, 5);
         scene.add(mainLight);
 
-        // Мягкий фоновый свет
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        // Мягкий ambient light с фиолетовым оттенком
+        const ambientLight = new THREE.AmbientLight(0x4a4a8a, 0.4);
         scene.add(ambientLight);
 
-        // Контровой свет (сзади) — для отделения от фона
-        const rimLight = new THREE.PointLight(0x4a4a8a, 0.5, 50);
-        rimLight.position.set(-5, -5, -5);
+        // Контровой свет (сзади)
+        const rimLight = new THREE.PointLight(0x3a3a7a, 0.6, 60);
+        rimLight.position.set(-4, -4, -4);
         scene.add(rimLight);
 
-        // Переменные для курсора
-        let mouseX = 0;
-        let mouseY = 0;
-
+        // Курсор
+        let mouseX = 0, mouseY = 0;
         window.addEventListener("mousemove", (event) => {
-            mouseX = (event.clientX / window.innerWidth) * 2 - 1;          // X: -1 → +1
-            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;       // Y: +1 (вверху) → -1 (внизу)
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
         });
 
         // Адаптивность
@@ -114,7 +112,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Плавная анимация
+        // Анимация с плавной интерполяцией
         let targetRotationX = 0;
         let targetRotationY = 0;
         const rotationSpeed = 0.05;
