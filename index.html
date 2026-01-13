@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IV - UNITY 222DEVELOPER</title>
+    <title>IV - UNITY 333DEVELOPER</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         * {
@@ -71,22 +71,22 @@
             text-shadow: 0 0 20px #fff;
         }
         .qr-code {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 180px;
-    height: 180px;
-    background: url('photo_2026-01-13_13-23-04.jpg') no-repeat center;
-    background-size: contain;
-    padding: 10px;
-    background-color: rgba(255,255,255,0.95);
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.5);
-    pointer-events: auto;
-    z-index: 20;
-    animation: pulse 2s infinite ease-in-out;
-}
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 180px;
+            height: 180px;
+            background: url('photo_2026-01-13_13-23-04.jpg') no-repeat center;
+            background-size: contain;
+            padding: 10px;
+            background-color: rgba(255,255,255,0.95);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            pointer-events: auto;
+            z-index: 20;
+            animation: pulse 2s infinite ease-in-out;
+        }
 
         /* Бегущие строки */
         .scrolling-text-center,
@@ -186,18 +186,18 @@
         scene.background = new THREE.Color(0x8a2be2);
 
         const camera = new THREE.PerspectiveCamera(
-            75,
+            60,
             window.innerWidth / window.innerHeight,
             0.1,
-            1000
+            100
         );
-        camera.position.set(0, 1, 3);
+        camera.position.set(0, 1.2, 4);
 
-        const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        dirLight.position.set(4, 4, 5);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        dirLight.position.set(2, 4, 5);
         scene.add(dirLight);
 
-        const ambient = new THREE.AmbientLight(0x3a3a6a, 0.3);
+        const ambient = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambient);
 
         let model = null;
@@ -207,10 +207,11 @@
             'kuma_heavy_robot_r-9000s.glb',
             function (gltf) {
                 model = gltf.scene;
-                model.scale.set(10, 10, 10);
-                model.position.set(0, -1, 0);
+                model.scale.set(3, 3, 3);
+                model.position.set(0, -0.5, 0);
+                model.rotation.set(0, Math.PI * 0.2, 0);
                 scene.add(model);
-                camera.lookAt(0, 0, 0);
+                camera.lookAt(0, 0.5, 0);
             },
             undefined,
             function (error) {
